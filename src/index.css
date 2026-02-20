@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-50;
+    background-image:
+      radial-gradient(at 0% 0%, hsla(210, 100%, 96%, 1) 0, transparent 50%),
+      radial-gradient(at 50% 0%, hsla(215, 100%, 96%, 1) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(210, 100%, 96%, 1) 0, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  .dark body {
+    background-image: none;
+  }
+}
+
+.glass-panel {
+  @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl;
+}
+
+.glass-input {
+  @apply bg-white/50 border-slate-200 focus:bg-white transition-all duration-300;
+}
+
+.premium-gradient {
+  @apply bg-gradient-to-r from-supnum-blue to-blue-600;
+}
