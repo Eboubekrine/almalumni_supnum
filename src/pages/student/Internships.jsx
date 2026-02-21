@@ -42,19 +42,16 @@ export function Internships() {
 
     const handleApply = async (e) => {
         e.preventDefault();
-        if (!cvFile || !selectedOffre) return;
+        if (!selectedOffre) return;
 
         setSubmitting(true);
         setErrorMsg('');
 
         try {
-            const formData = new FormData();
-            formData.append('id_offre', selectedOffre.id_offre);
-            formData.append('cv', cvFile);
-            formData.append('message', message);
-
-            const res = await api.post('/candidatures/apply', formData, {
-                headers: { 'Content-Type': 'multipart/form-data' }
+            // Send as JSON — no file upload needed
+            const res = await api.post('/candidatures/apply', {
+                id_offre: selectedOffre.id_offre,
+                message: message
             });
 
             if (res.data.success) {
