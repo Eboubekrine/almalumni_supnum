@@ -42,8 +42,9 @@ export function ManageEvents() {
                     description: e.description,
                     date: e.date_evenement ? new Date(e.date_evenement).toISOString().split('T')[0] : '',
                     stage: e.lieu || 'General',
-                    type: 'Event', // Default as DB doesn't have type yet
-                    color: 'bg-blue-600'
+                    image: e.image || '', // Added image field
+                    type: e.type || 'Event', // Map from DB
+                    color: e.type === 'Challenge' ? 'bg-orange-500' : e.type === 'Contest' ? 'bg-purple-600' : 'bg-blue-600'
                 }));
                 setEvents(mappedEvents);
             }
@@ -57,9 +58,10 @@ export function ManageEvents() {
     }, []);
 
     const handleImageUpload = (e) => {
-        // Keeping UI for future, but DB won't save it yet
         const file = e.target.files[0];
         if (file) {
+            // In a real app, you'd upload this to a server. 
+            // For now, we'll use a URL OR the Base64 as the image string.
             const reader = new FileReader();
             reader.onloadend = () => {
                 setNewEvent(prev => ({ ...prev, image: reader.result }));
@@ -103,7 +105,9 @@ export function ManageEvents() {
             titre: newEvent.title,
             description: newEvent.description,
             date_evenement: newEvent.date,
-            lieu: newEvent.stage
+            lieu: newEvent.stage,
+            image: newEvent.image, // Added image
+            type: newEvent.type // Added type
         };
 
         try {
