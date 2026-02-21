@@ -42,9 +42,9 @@ export function ManageEvents() {
                     description: e.description,
                     date: e.date_evenement ? new Date(e.date_evenement).toISOString().split('T')[0] : '',
                     stage: e.lieu || 'General',
-                    image: e.image || '', // Added image field
-                    type: e.type || 'Event', // Map from DB
-                    color: e.type === 'Challenge' ? 'bg-orange-500' : e.type === 'Contest' ? 'bg-purple-600' : 'bg-blue-600'
+                    image: e.image || '',
+                    type: e.type_evenement || 'Event', // Map from DB column type_evenement
+                    color: e.type_evenement === 'Challenge' ? 'bg-orange-500' : e.type_evenement === 'Contest' ? 'bg-purple-600' : 'bg-blue-600'
                 }));
                 setEvents(mappedEvents);
             }
