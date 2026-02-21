@@ -56,6 +56,7 @@ export function DashboardLayout() {
         { name: t.dashboard.nav.messages, path: '/dashboard/messages', icon: MessageSquare },
         { name: t.nav.internships, path: '/dashboard/internships', icon: Briefcase },
         { name: t.nav.companies, path: '/dashboard/companies', icon: Building },
+        { name: t.admin.nav.events, path: '/dashboard/events', icon: Calendar },
         { name: t.dashboard.nav.myOffers, path: '/dashboard/offers', icon: Briefcase },
     ];
 

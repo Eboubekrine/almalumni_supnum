@@ -7,8 +7,11 @@ import { Input } from '../../components/ui/Input';
 import { Plus, Calendar, Edit, Trash2, ArrowRight, Trophy, Zap, X, Save, Image as ImageIcon, Clock, Briefcase, Upload } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { useAuth } from '../../context/AuthContext'; // Import Auth
+
 export function ManageEvents() {
     const { t } = useLanguage();
+    const { user } = useAuth(); // Get user
     const [events, setEvents] = useState([]);
 
     const [isAdding, setIsAdding] = useState(false);
@@ -28,7 +31,9 @@ export function ManageEvents() {
 
     const fetchEvents = async () => {
         try {
-            const res = await api.get('/evenements?limit=100');
+            // Filter by userId if not admin
+            const userIdParam = user?.role === 'ADMIN' ? '' : `&userId=${user?.id_user}`;
+            const res = await api.get(`/evenements?limit=100${userIdParam}`);
             if (res.data.success) {
                 // Map Backend Data to Frontend UI
                 const mappedEvents = res.data.data.map(e => ({
@@ -340,21 +345,25 @@ export function ManageEvents() {
                                         {t.admin.events.learnMore} <ArrowRight className="ml-2 h-4 w-4" />
                                     </button>
                                     <div className="flex space-x-2">
-                                        <Button
-                                            variant="outline"
-                                            size="sm"
-                                            className="text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700"
-                                            onClick={() => handleEdit(event)}
-                                        >
-                                            <Edit className="h-4 w-4" />
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            className="bg-red-500 hover:bg-red-600 text-white border-none"
-                                            onClick={() => handleDelete(event.id)}
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
+                                        {(user?.role === 'ADMIN' || event.id_organisateur === user?.id_user) && (
+                                            <>
+                                                <Button
+                                                    variant="outline"
+                                                    size="sm"
+                                                    className="text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700"
+                                                    onClick={() => handleEdit(event)}
+                                                >
+                                                    <Edit className="h-4 w-4" />
+                                                </Button>
+                                                <Button
+                                                    size="sm"
+                                                    className="bg-red-500 hover:bg-red-600 text-white border-none"
+                                                    onClick={() => handleDelete(event.id)}
+                                                >
+                                                    <Trash2 className="h-4 w-4" />
+                                                </Button>
+                                            </>
+                                        )}
                                     </div>
                                 </div>
                             </CardContent>

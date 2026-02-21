@@ -63,6 +63,7 @@ function App() {
               <Route path="companies" element={<Companies />} />
               <Route path="applications" element={<MyApplications />} />
               <Route path="offers" element={<ManageInternships />} />
+              <Route path="events" element={<ManageEvents />} />
             </Route>
 
             {/* Admin Routes */}
