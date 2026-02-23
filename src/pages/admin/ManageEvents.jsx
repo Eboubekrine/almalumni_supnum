@@ -151,13 +151,15 @@ export function ManageEvents() {
         <div className="space-y-8">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <h1 className="text-3xl font-bold text-slate-900 dark:text-white">{t.admin.events.title}</h1>
-                <Button
-                    onClick={() => { resetForm(); setIsAdding(true); }}
-                    className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20"
-                >
-                    <Plus className="mr-2 h-4 w-4" />
-                    {t.admin.events.create}
-                </Button>
+                {(user?.role === 'ADMIN' || user?.role === 'ALUMNI') && (
+                    <Button
+                        onClick={() => { resetForm(); setIsAdding(true); }}
+                        className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/20"
+                    >
+                        <Plus className="mr-2 h-4 w-4" />
+                        {t.admin.events.create}
+                    </Button>
+                )}
             </div>
 
             <AnimatePresence>
