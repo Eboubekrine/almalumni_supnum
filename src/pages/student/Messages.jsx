@@ -125,8 +125,12 @@ export function Messages() {
 
         try {
             const formData = new FormData();
-            formData.append('recipientId', !selectedUser.isGroup ? (selectedUser.id_user || selectedUser.id) : '');
-            formData.append('groupId', selectedUser.isGroup ? (selectedUser.id || selectedUser.id_groupe) : '');
+            const recipientId = !selectedUser.isGroup ? (selectedUser.id_user || selectedUser.id) : null;
+            const groupId = selectedUser.isGroup ? (selectedUser.id || selectedUser.id_groupe) : null;
+
+            if (recipientId) formData.append('recipientId', recipientId);
+            if (groupId) formData.append('groupId', groupId);
+
             formData.append('content', newMessageText);
             if (imageFile) {
                 formData.append('image', imageFile);
