@@ -150,6 +150,8 @@ export function Messages() {
             }
         } catch (err) {
             console.error("Failed to send message", err);
+            const errorMsg = err.response?.data?.message || err.message;
+            alert('Fails to send message: ' + errorMsg);
         }
     };
 
