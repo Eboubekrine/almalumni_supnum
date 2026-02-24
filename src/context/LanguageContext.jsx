@@ -690,18 +690,27 @@ export const translations = {
         }
     },
     AR: {
-        nav: { home: 'الرئيسية', events: 'الأحداث', about: 'حول', signin: 'تسجيل الدخول', signup: 'إنشاء حساب' },
+        nav: {
+            home: 'الرئيسية',
+            events: 'الأحداث',
+            about: 'حول',
+            signin: 'تسجيل الدخول',
+            signup: 'إنشاء حساب',
+            internships: 'الفرص',
+            companies: 'الشركات',
+            logout: 'تسجيل الخروج'
+        },
         dashboard: {
             nav: { dashboard: 'لوحة التحكم', profile: 'الملف الشخصي', users: 'المستخدمين', friends: 'الأصدقاء', messages: 'الرسائل', myOffers: 'عروضي' },
             welcome: 'مرحبًا،',
             welcomeSubtitle: 'إليك ما يحدث في شبكة SupNum الخاصة بك.',
-            stats: { totalUsers: 'إجمالي المستخدمين', friends: 'أصدقاؤك', pending: 'طلبات معلقة' },
-            quickLinks: { findUsers: 'البحث عن مستخدمين', messages: 'الرسائل', events: 'الأحداث' },
+            stats: { totalUsers: 'إجمالي المستخدمين', friends: 'أصدقاؤك', pending: 'طلبات معلقة', growth: 'هذا الشهر' },
+            quickLinks: { findUsers: 'البحث عن مستخدمين', messages: 'الرسائل', events: 'الأحداث', viewProfile: 'عرض الملف الشخصي' },
             friendRequests: 'طلبات الصداقة',
             suggestions: 'اقتراحات التواصل',
             viewMore: 'عرض المزيد',
-            accept: 'قبول',
-            decline: 'رفض'
+            bonRetour: 'مرحبًا بعودتك!',
+            connectedSuccess: 'تم تسجيل الدخول بنجاح.'
         },
         admin: {
             nav: { dashboard: 'لوحة التحكم', events: 'إدارة الأحداث', users: 'إدارة المستخدمين' },
@@ -710,20 +719,170 @@ export const translations = {
             stats: { totalUsers: 'إجمالي المستخدمين', students: 'الخريجين القدامى', graduates: 'الخريجين الجدد' },
             charts: { userGrowth: 'نمو المستخدمين', students: 'الخريجين القدامى', graduates: 'الخريجين الجدد' },
             events: { title: 'الأحداث الأخيرة', create: 'إنشاء حدث', edit: 'تعديل', delete: 'حذف', learnMore: 'المزيد' },
-            users: { title: 'إدارة المستخدمين', search: 'البحث عن مستخدمين...', role: 'الدور', actions: 'إجراءات', remove: 'إزالة' }
+            users: {
+                title: 'إدارة المستخدمين',
+                search: 'البحث عن مستخدمين...',
+                role: 'الدور',
+                actions: 'إجراءات',
+                remove: 'إزالة',
+                export: 'تصدير CSV',
+                add: 'إضافة مستخدم',
+                addUser: 'إضافة مستخدم جديد',
+                allStatus: 'كل الحالات',
+                verified: 'موثق',
+                pending: 'قيد الانتظار',
+                suspended: 'موقوف',
+                approve: 'موافقة',
+                firstName: 'الاسم الأول',
+                lastName: 'اللقب',
+                email: 'البريد الإلكتروني',
+                password: 'كلمة المرور',
+                user: 'مستخدم',
+                status: 'الحالة',
+                confirmDelete: 'هل أنت متأكد من رغبتك في إزالة هذا المستخدم؟ لا يمكن التراجع عن هذا الإجراء.'
+            }
         },
         profile: {
             title: 'ملفي الشخصي',
             basicInfo: 'المعلومات الأساسية',
             fullName: 'الاسم الكامل',
             supnumId: 'معرف SupNum',
-            role: 'الدور',
+            phone: 'رقم الهاتف',
+            birthday: 'تاريخ الميلاد',
             bio: 'نبذة عني',
+            bioPlaceholder: 'أخبرنا عن نفسك...',
+            role: 'الدور',
             socialLinks: 'روابط التواصل الاجتماعي',
             saveChanges: 'حفظ التغييرات',
+            saving: 'جاري الحفظ...',
+            saveSuccess: 'تم حفظ التغييرات بنجاح!',
             uploadPhoto: 'رفع صورة',
             student: 'خريج سابق',
-            graduate: 'خريج'
+            graduate: 'خريج',
+            admin: 'مسؤول',
+            mentor: 'مرشد',
+            mentoringProgram: 'برنامج الإرشاد',
+            mentoringDesc: 'بتفعيل هذا الخيار، ستظهر كـ "مرشد" متاح لمساعدة الطلاب.',
+            professionalInfo: 'المعلومات المهنية',
+            currentStatus: 'الحالة الحالية',
+            selectStatus: 'اختر الحالة',
+            employed: 'موظف',
+            seeking: 'يبحث عن فرص',
+            studying: 'يواصل دراسته',
+            freelance: 'عمل حر',
+            jobTitle: 'المسمى الوظيفي',
+            company: 'الشركة / المنظمة',
+            documents: 'المستندات',
+            myDocuments: 'مستنداتي',
+            cv: 'السيرة الذاتية (CV)',
+            cvLoaded: 'تم تحميل السيرة الذاتية بنجاح',
+            noCv: 'لم يتم تحميل سيرة ذاتية',
+            viewCv: 'عرض سيرتي الذاتية',
+            changeCv: 'تغيير السيرة الذاتية',
+            addCv: 'إضافة سيرة ذاتية',
+            acceptedFormats: 'الصيغ المقبولة: PDF, Word. الحد الأقصى 5 ميجابايت.',
+            availableMentoring: 'متاح للإرشاد',
+            unavailableMentoring: 'غير متاح حاليًا للإرشاد',
+            edit: 'تعديل الملف الشخصي',
+            cancel: 'إلغاء'
+        },
+        applications: {
+            title: 'طلباتي',
+            subtitle: 'تتبع حالة طلبات التدريب الخاصة بك',
+            noApps: 'لا توجد طلبات بعد',
+            noAppsSubtitle: 'ابدأ باستكشاف التدريبات وقدم طلباتك للبدء!',
+            appliedOn: 'تم التقديم في',
+            motivation: 'رسالة التحفيز',
+            myCv: 'سيرتي الذاتية',
+            status: {
+                pending: 'قيد الانتظار',
+                accepted: 'مقبول',
+                rejected: 'مرفوض'
+            },
+            remote: 'عن بعد'
+        },
+        about: {
+            title: 'عن SupNum Connect',
+            subtitle: 'SupNum Connect هي الشبكة الاجتماعية الأكاديمية الرسمية للمعهد العالي للرقمنة (SupNum).',
+            mission: {
+                title: 'مهمتنا',
+                desc: 'إنشاء مجتمع حيوي ومترابط حيث يمكن للطلاب والخريجين والمسؤولين التعاون وتبادل المعرفة والنمو معًا. نحن نؤمن بقوة التواصل لفتح فرص جديدة وتعزيز التميز الأكاديمي.'
+            },
+            goals: {
+                title: 'الأهداف الرئيسية',
+                items: [
+                    'ربط الطلاب الحاليين بالخريجين',
+                    'تسهيل الإرشاد والتوجيه',
+                    'مركزية أحداث وأخبار الحرم الجامعي',
+                    'عرض إنجازات الطلاب'
+                ]
+            },
+            cta: {
+                title: 'بني من قبل الطلاب، للطلاب',
+                desc: 'تم إنشاء هذه المنصة كمشروع من قبل طلاب SupNum، مما يبرز المهارات التقنية والابتكار الذي يتم تعزيزه في معهدنا.',
+                founded: 'تأسس في',
+                institute: 'المعهد'
+            }
+        },
+        auth: {
+            signIn: {
+                title: 'تسجيل الدخول',
+                subtitle: 'الوصول إلى منطقة الأعضاء الخاصة بك',
+                email: 'البريد الإلكتروني',
+                password: 'كلمة المرور',
+                forgot: 'نسيت؟',
+                button: 'تسجيل الدخول',
+                noAccount: "جديد في SupNum Connect؟",
+                createAccount: "إنشاء حساب",
+                error: 'حدث خطأ غير متوقع',
+                placeholder: {
+                    email: 'your.email@supnum.mr'
+                }
+            },
+            signUp: {
+                title: 'إنشاء حسابك',
+                subtitle: 'ابدأ رحلتك مع SupNum Connect اليوم',
+                firstName: 'الاسم الأول',
+                lastName: 'اللقب',
+                email: 'البريد الإلكتروني',
+                password: 'كلمة المرور',
+                role: 'الدور',
+                button: 'إنشاء حساب',
+                haveAccount: 'لديك حساب بالفعل؟',
+                signIn: 'تسجيل الدخول',
+                benefits: {
+                    title: 'انضم إلى شبكة النخبة من خريجي SupNum.',
+                    items: [
+                        'التواصل مع الأقران وقادة الصناعة',
+                        'الوصول إلى فرص عمل وتدريب حصرية',
+                        'المشاركة في الأحداث والورش المهنية',
+                        'إرشاد الجيل القادم من الطلاب'
+                    ]
+                }
+            }
+        },
+        userProfile: {
+            viewProfile: 'عرض الملف الشخصي العام',
+            message: 'إرسال رسالة',
+            connecting: 'جاري الاتصال...',
+            connected: 'متصل',
+            mutual: 'أصدقاء مشتركين',
+            about: 'حول',
+            experience: 'الخبرة',
+            contact: 'معلومات الاتصال',
+            back: 'العودة للبحث',
+            requestSent: 'تم إرسال الطلب',
+            connect: 'تواصل',
+            academicInfo: 'المعلومات الأكاديمية',
+            department: 'القسم',
+            entryYear: 'سنة الالتحاق',
+            cs: 'علوم الحاسوب',
+            noBio: "لم يكتب هذا المستخدم نبذة شخصية بعد.",
+            noSocial: 'لا توجد روابط تواصل اجتماعي عامة.',
+            viewSocial: 'الملف الشخصي',
+            socialProfiles: 'الملفات الاجتماعية',
+            notFound: 'المستخدم غير موجود',
+            loadError: 'فشل تحميل ملف المستخدم'
         },
         hero: {
             welcome: 'مرحبًا بكم في مجتمع SupNum',
@@ -742,11 +901,127 @@ export const translations = {
             challenges: 'التحديات',
             contests: 'المسابقات'
         },
+        opportunities: {
+            title: 'الفرص والشركاء',
+            subtitle: 'تواصل مع أفضل الشركات وابحث عن خطوتك المهنية التالية.',
+            partners: 'الشركات الشريكة',
+            active: 'التدريبات النشطة',
+            latest: 'أحدث الفرص',
+            view: 'عرض',
+            apply: 'تقديم'
+        },
+        internships: {
+            title: 'التدريبات والوظائف',
+            subtitle: 'اكتشف فرصتك التالية',
+            searchPlaceholder: 'البحث عن طريق العنوان أو الشركة...',
+            allTypes: 'كل الأنواع',
+            internship: 'تدريب',
+            job: 'وظيفة',
+            details: 'التفاصيل',
+            apply: 'تقديم',
+            noOffers: 'لم يتم العثور على عروض',
+            noOffersSubtitle: 'حاول تعديل بحثك أو الفلاتر',
+            applyRole: 'التقديم للوظيفة',
+            applicationSent: 'تم إرسال الطلب!',
+            applicationSentDesc: 'تم تقديم سيرتك الذاتية بنجاح إلى',
+            uploadCV: 'رفع السيرة الذاتية (PDF/Word)',
+            uploadDesc: 'انقر أو اسحب لرفع سيرتك الذاتية',
+            uploadLimit: 'PDF, DOC, DOCX حتى 5 ميجابايت',
+            messagePlaceholder: 'لماذا أنت مناسب لهذا الدور؟',
+            cancel: 'إلغاء',
+            submit: 'إرسال الطلب',
+            submitting: 'جاري الإرسال...'
+        },
+        companies: {
+            title: 'الشركات الشريكة',
+            subtitle: 'شبكة شركائنا المهنيين',
+            searchPlaceholder: 'البحث عن طريق الاسم أو القطاع أو المدينة...',
+            partner: 'شريك',
+            visitWebsite: 'زيارة الموقع',
+            noCompanies: 'لم يتم العثور على شركات',
+            noCompaniesSubtitle: 'حاول البحث عن شيء آخر',
+            add: 'إضافة شركة',
+            edit: 'تعديل الشركة',
+            name: 'اسم الشركة',
+            industry: 'المجال',
+            location: 'الموقع',
+            website: 'الموقع الإلكتروني',
+            confirmDelete: 'هل أنت متأكد من رغبتك في إزالة هذه الشركة؟'
+        },
+        friends: {
+            title: 'الأصدقاء',
+            tabs: { mine: 'أصدقائي', requests: 'الطلبات' },
+            message: 'رسالة',
+            noFriends: 'لا يوجد أصدقاء بعد. تواصل مع الآخرين!',
+            sentRequest: 'أرسل لك طلب صداقة',
+            accept: 'قبول',
+            reject: 'رفض',
+            noRequests: 'لا توجد طلبات معلقة.',
+            acceptedAlert: 'تم قبول طلب الصداقة!',
+            rejectedAlert: 'تم رفض طلب الصداقة',
+            failedAlert: 'فشل معالجة الطلب'
+        },
+        search: {
+            title: 'البحث عن مستخدمين',
+            placeholder: 'البحث بالاسم أو البريد الإلكتروني...',
+            loading: 'جاري التحميل...',
+            viewProfile: 'عرض الملف الشخصي',
+            sentSuccess: 'تم إرسال طلب الصداقة بنجاح!',
+            noResults: 'لم يتم العثور على مستخدمين يطابقون بحثك.'
+        },
+        messages: {
+            title: 'الرسائل',
+            createGroup: 'إنشاء مجموعة',
+            newGroup: 'مجموعة جديدة',
+            groupName: 'اسم المجموعة',
+            searchPlaceholder: 'البحث بالاسم أو البريد الإلكتروني...',
+            filterDomain: 'تصفية حسب المجال',
+            allDomains: 'كل المجالات',
+            selectMembers: 'اختر الأعضاء',
+            loadingUsers: 'جاري تحميل المستخدمين...',
+            clickToChat: 'انقر للدردشة',
+            members: 'أعضاء',
+            online: 'متصل',
+            addPeople: 'إضافة أشخاص للدردشة',
+            typeMessage: 'اكتب رسالة...',
+            selectConv: 'اختر محادثة لبدء المراسلة',
+            groupCreated: 'تم إنشاء المجموعة بنجاح مع'
+        },
+        charts: {
+            entryYear: 'الطلاب حسب سنة الالتحاق',
+            promotion: 'الخريجين حسب الدفعة',
+            growth: 'نمو المجتمع عبر السنوات',
+            students: 'الطلاب',
+            graduates: 'الخريجين'
+        },
         events: {
             title: 'الأحداث القادمة',
             subtitle: 'شارك في الأحداث، التحديات، والمسابقات لتعزيز مهاراتك والتواصل مع أقرانك.',
             viewAll: 'عرض كل الأحداث',
-            learnMore: 'اعرف المزيد'
+            learnMore: 'اعرف المزيد',
+            viewDetails: 'عرض التفاصيل',
+            create: 'إنشاء حدث',
+            createNew: 'إنشاء حدث جديد',
+            form: {
+                title: 'العنوان',
+                date: 'التاريخ',
+                location: 'الموقع',
+                locationPlaceholder: 'مثال: المدرج أ',
+                description: 'الوصف',
+                uploadPhoto: 'رفع صورة (من جهازك)',
+                imageUrl: 'رابط الصورة',
+                urlPlaceholder: 'https://images.unsplash.com/photo...',
+                orUrl: 'أو أدخل رابط الصورة أدناه',
+                cancel: 'إلغاء',
+                submit: 'إنشاء الحدث'
+            },
+            success: 'تم إنشاء الحدث بنجاح!',
+            failed: 'فشل إنشاء الحدث',
+            organizedBy: 'منظم من قبل',
+            noEvents: 'لم يتم العثور على أحداث',
+            noEventsSubtitle: 'عد لاحقًا للأحداث والتحديات القادمة.',
+            close: 'إغلاق',
+            upcomingTerm: 'القادم هذا الفصل'
         },
         cta: {
             title: 'مستعد للانضمام إلى مجتمع SupNum؟',

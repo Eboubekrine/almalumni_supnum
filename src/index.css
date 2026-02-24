@@ -28,3 +28,7 @@
 .premium-gradient {
   @apply bg-gradient-to-r from-supnum-blue to-blue-600;
 }
+
+.font-arabic {
+  font-family: 'Cairo', sans-serif !important;
+}
