@@ -203,26 +203,26 @@ export function ManageInternships() {
                         </div>
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Job Title</label>
+                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{t.internships.jobTitle}</label>
                                 <Input
                                     required
                                     value={formData.titre}
                                     onChange={(e) => setFormData({ ...formData, titre: e.target.value })}
-                                    placeholder="e.g. Software Engineer"
+                                    placeholder={t.internships.placeholder.jobTitle}
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Company</label>
+                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{t.internships.company}</label>
                                 <Input
                                     required
                                     value={formData.entreprise}
                                     onChange={(e) => setFormData({ ...formData, entreprise: e.target.value })}
-                                    placeholder="e.g. Tech Corp"
+                                    placeholder={t.internships.placeholder.company}
                                 />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Type</label>
+                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{t.internships.type}</label>
                                     <select
                                         className="w-full h-10 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm"
                                         value={formData.type_offre}
@@ -233,12 +233,12 @@ export function ManageInternships() {
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Location</label>
+                                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">{t.internships.location}</label>
                                     <Input
                                         required
                                         value={formData.lieu}
                                         onChange={(e) => setFormData({ ...formData, lieu: e.target.value })}
-                                        placeholder="e.g. Nouakchott"
+                                        placeholder={t.internships.placeholder.location}
                                     />
                                 </div>
                             </div>
@@ -250,7 +250,7 @@ export function ManageInternships() {
                                     onChange={(e) => setFormData({ ...formData, active: e.target.checked })}
                                     className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                                 />
-                                <label htmlFor="active" className="text-sm font-medium text-slate-700 dark:text-slate-300">Active Listing</label>
+                                <label htmlFor="active" className="text-sm font-medium text-slate-700 dark:text-slate-300">{t.internships.activeListing}</label>
                             </div>
                             <div className="pt-4 flex gap-3">
                                 <Button type="button" variant="outline" onClick={handleCloseModal} className="flex-1">{t.internships.cancel}</Button>

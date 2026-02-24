@@ -31,7 +31,7 @@ export const translations = {
             welcome: 'Admin Dashboard',
             subtitle: 'Manage your SupNum Connect platform.',
             stats: { totalUsers: 'Total Users', students: 'Students', graduates: 'Graduates' },
-            charts: { userGrowth: 'User Growth', students: 'Students', graduates: 'Graduates' },
+            charts: { userGrowth: 'User Growth', students: 'Students', graduates: 'Graduates', opportunitiesPosted: 'Post Offer' },
             events: { title: 'Recent Events', create: 'Create Event', edit: 'Edit', delete: 'Delete', learnMore: 'Learn More' },
             users: {
                 title: 'User Management',
@@ -98,7 +98,17 @@ export const translations = {
             availableMentoring: 'Available for Mentoring',
             unavailableMentoring: 'Currently Unavailable for Mentoring',
             edit: 'Edit Profile',
-            cancel: 'Cancel'
+            cancel: 'Cancel',
+            jobTitle: 'Job Title',
+            company: 'Company',
+            location: 'Location',
+            type: 'Type',
+            activeListing: 'Active Listing',
+            placeholder: {
+                jobTitle: 'e.g. Software Engineer',
+                company: 'e.g. Tech Corp',
+                location: 'e.g. Nouakchott'
+            }
         },
         applications: {
             title: 'My Applications',
@@ -374,7 +384,7 @@ export const translations = {
             welcome: 'Tableau de bord Admin',
             subtitle: 'Gérez votre plateforme SupNum Connect.',
             stats: { totalUsers: 'Total Utilisateurs', students: 'Anciens', graduates: 'Diplômés' },
-            charts: { userGrowth: 'Croissance des utilisateurs', students: 'Anciens', graduates: 'Diplômés' },
+            charts: { userGrowth: 'Croissance des utilisateurs', students: 'Anciens', graduates: 'Diplômés', opportunitiesPosted: 'Créer une offre' },
             events: { title: 'Événements Récents', create: 'Créer un événement', edit: 'Modifier', delete: 'Supprimer', learnMore: 'En savoir plus' },
             users: {
                 title: 'Gestion des Utilisateurs',
@@ -587,7 +597,17 @@ export const translations = {
             messagePlaceholder: 'Pourquoi êtes-vous un bon candidat pour ce poste ?',
             cancel: 'Annuler',
             submit: 'Soumettre la candidature',
-            submitting: 'Envoi en cours...'
+            submitting: 'Envoi en cours...',
+            jobTitle: 'Titre du poste',
+            company: 'Entreprise',
+            location: 'Lieu',
+            type: 'Type',
+            activeListing: 'Annonce active',
+            placeholder: {
+                jobTitle: 'ex: Ingénieur Logiciel',
+                company: 'ex: Tech Corp',
+                location: 'ex: Nouakchott'
+            }
         },
         companies: {
             title: 'Entreprises Partenaires',
@@ -717,7 +737,7 @@ export const translations = {
             welcome: 'لوحة تحكم المسؤول',
             subtitle: 'إدارة منصة SupNum Connect الخاصة بك.',
             stats: { totalUsers: 'إجمالي المستخدمين', students: 'الخريجين القدامى', graduates: 'الخريجين الجدد' },
-            charts: { userGrowth: 'نمو المستخدمين', students: 'الخريجين القدامى', graduates: 'الخريجين الجدد' },
+            charts: { userGrowth: 'نمو المستخدمين', students: 'الخريجين القدامى', graduates: 'الخريجين الجدد', opportunitiesPosted: 'إنشاء عرض' },
             events: { title: 'الأحداث الأخيرة', create: 'إنشاء حدث', edit: 'تعديل', delete: 'حذف', learnMore: 'المزيد' },
             users: {
                 title: 'إدارة المستخدمين',
@@ -930,7 +950,17 @@ export const translations = {
             messagePlaceholder: 'لماذا أنت مناسب لهذا الدور؟',
             cancel: 'إلغاء',
             submit: 'إرسال الطلب',
-            submitting: 'جاري الإرسال...'
+            submitting: 'جاري الإرسال...',
+            jobTitle: 'عنوان الوظيفة',
+            company: 'الشركة',
+            location: 'الموقع',
+            type: 'النوع',
+            activeListing: 'عرض نشط',
+            placeholder: {
+                jobTitle: 'مثال: مهندس برمجيات',
+                company: 'مثال: شركة تقنية',
+                location: 'مثال: نواكشوط'
+            }
         },
         companies: {
             title: 'الشركات الشريكة',
