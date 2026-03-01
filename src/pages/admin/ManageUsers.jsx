@@ -21,7 +21,10 @@ export function ManageUsers() {
             try {
                 const res = await api.get('/users');
                 if (res.data.success) {
-                    setUsers(res.data.users.map(u => ({ ...u, status: 'Verified' }))); // Default status
+                    setUsers(res.data.users.map(u => ({
+                        ...u,
+                        status: u.role === 'ALUMNI' && !u.est_verifie ? 'Pending' : 'Verified'
+                    })));
                 }
             } catch (err) {
                 console.error("Failed to fetch users", err);
@@ -52,8 +55,16 @@ export function ManageUsers() {
         }
     };
 
-    const handleStatusChange = (id, newStatus) => {
-        setUsers(users.map(u => u.id_user === id ? { ...u, status: newStatus } : u));
+    const handleValidate = async (id) => {
+        try {
+            const res = await api.put(`/users/${id}/validate`);
+            if (res.data.success) {
+                setUsers(users.map(u => u.id_user === id ? { ...u, est_verifie: true, status: 'Verified' } : u));
+            }
+        } catch (err) {
+            console.error("Failed to validate user", err);
+            alert("Failed to validate user: " + (err.response?.data?.message || err.message));
+        }
     };
 
     const handleExportCSV = () => {
@@ -217,12 +228,13 @@ export function ManageUsers() {
                                 <th className="p-6 font-semibold text-slate-900 dark:text-white">{t.admin.users.user}</th>
                                 <th className="p-6 font-semibold text-slate-900 dark:text-white">{t.admin.users.email}</th>
                                 <th className="p-6 font-semibold text-slate-900 dark:text-white">{t.admin.users.role}</th>
+                                <th className="p-6 font-semibold text-slate-900 dark:text-white">{t.auth?.signUp?.domaine || 'Domaine'}</th>
                                 <th className="p-6 font-semibold text-slate-900 dark:text-white">{t.admin.users.status}</th>
                                 <th className="p-6 font-semibold text-slate-900 dark:text-white text-right">{t.admin.users.actions}</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
-                            {loading ? <tr><td colSpan="5" className="p-6 text-center">{t.search.loading}</td></tr> : filteredUsers.map((user) => (
+                            {loading ? <tr><td colSpan="6" className="p-6 text-center">{t.search.loading}</td></tr> : filteredUsers.map((user) => (
                                 <tr key={user.id_user} className="group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
                                     <td className="p-6">
                                         <div className="flex items-center space-x-4">
@@ -251,6 +263,11 @@ export function ManageUsers() {
                                         </span>
                                     </td>
                                     <td className="p-6">
+                                        <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300">
+                                            {user.domaine || '—'}
+                                        </span>
+                                    </td>
+                                    <td className="p-6">
                                         <span className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider w-fit ${user.status === 'Verified' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300' :
                                             user.status === 'Pending' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300' :
                                                 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300'
@@ -264,7 +281,7 @@ export function ManageUsers() {
                                     <td className="p-6 text-right">
                                         <div className="flex justify-end gap-2">
                                             {user.status === 'Pending' && (
-                                                <Button size="sm" onClick={() => handleStatusChange(user.id_user, 'Verified')} className="bg-green-600 hover:bg-green-700 text-white">
+                                                <Button size="sm" onClick={() => handleValidate(user.id_user)} className="bg-green-600 hover:bg-green-700 text-white">
                                                     {t.admin.users.approve}
                                                 </Button>
                                             )}

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
-import { GraduationCap, User, Mail, Lock, Hash, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { GraduationCap, User, Mail, Lock, Hash, ArrowRight, CheckCircle2, Layers } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -13,8 +13,10 @@ export function SignUp() {
         prenom: '',
         email: '',
         mot_de_passe: '',
-        role: 'STUDENT'
+        role: 'STUDENT',
+        domaine: ''
     });
+    const [pendingMessage, setPendingMessage] = useState('');
     const { signup } = useAuth();
     const { t } = useLanguage();
     const navigate = useNavigate();
@@ -25,9 +27,14 @@ export function SignUp() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setPendingMessage('');
         const result = await signup(formData);
         if (result.success) {
-            navigate('/signin');
+            if (result.pendingValidation) {
+                setPendingMessage(result.message || t.auth?.signUp?.pendingValidation || 'Inscription réussie. Votre compte est en attente de validation par l\'administrateur.');
+            } else {
+                navigate('/signin');
+            }
         } else {
             alert(result.error || "Registration failed");
         }
@@ -108,6 +115,17 @@ export function SignUp() {
                             </p>
                         </div>
 
+                        {pendingMessage && (
+                            <motion.div
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="p-4 text-sm text-amber-700 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-900/30 rounded-2xl flex items-center gap-3 font-medium mb-4"
+                            >
+                                <CheckCircle2 className="h-5 w-5 text-amber-500 flex-shrink-0" />
+                                {pendingMessage}
+                            </motion.div>
+                        )}
+
                         <form onSubmit={handleSubmit} className="space-y-5">
                             <div className="grid gap-5 md:grid-cols-2">
                                 <div className="space-y-2">
@@ -130,8 +148,9 @@ export function SignUp() {
                                 <label className="text-sm font-bold text-slate-700 dark:text-slate-200">{t.auth.signUp.email}</label>
                                 <div className="relative group">
                                     <Mail className="absolute left-4 top-3 h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
-                                    <Input name="email" type="email" placeholder="name@example.com" required onChange={handleChange} className="pl-12 h-11 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500/20" />
+                                    <Input name="email" type="email" placeholder="prenom.nom@supnum.mr" required onChange={handleChange} className="pl-12 h-11 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500/20" />
                                 </div>
+                                <p className="text-xs text-slate-400 dark:text-slate-500 ml-1">Seuls les emails @supnum.mr sont acceptés</p>
                             </div>
 
                             <div className="space-y-2">
@@ -142,24 +161,54 @@ export function SignUp() {
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-slate-700 dark:text-slate-200">{t.auth.signUp.role}</label>
-                                <div className="relative group font-medium">
-                                    <Hash className="absolute left-4 top-3 h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
-                                    <select
-                                        name="role"
-                                        value={formData.role}
-                                        onChange={handleChange}
-                                        className="w-full pl-12 h-11 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
-                                    >
-                                        <option value="STUDENT">{t.profile.student}</option>
-                                        <option value="ALUMNI">{t.profile.graduate}</option>
-                                    </select>
-                                    <div className="absolute right-4 top-3.5 pointer-events-none">
-                                        <ArrowRight className="h-4 w-4 text-slate-400 rotate-90" />
+                            <div className="grid gap-5 md:grid-cols-2">
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-700 dark:text-slate-200">{t.auth?.signUp?.role || 'Rôle'}</label>
+                                    <div className="relative group font-medium">
+                                        <Hash className="absolute left-4 top-3 h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                                        <select
+                                            name="role"
+                                            value={formData.role}
+                                            onChange={handleChange}
+                                            className="w-full pl-12 h-11 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                                        >
+                                            <option value="STUDENT">{t.profile.student}</option>
+                                            <option value="ALUMNI">{t.profile.graduate}</option>
+                                        </select>
+                                        <div className="absolute right-4 top-3.5 pointer-events-none">
+                                            <ArrowRight className="h-4 w-4 text-slate-400 rotate-90" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-sm font-bold text-slate-700 dark:text-slate-200">{t.auth?.signUp?.domaine || 'Domaine'}</label>
+                                    <div className="relative group font-medium">
+                                        <Layers className="absolute left-4 top-3 h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                                        <select
+                                            name="domaine"
+                                            value={formData.domaine}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full pl-12 h-11 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all appearance-none cursor-pointer"
+                                        >
+                                            <option value="">{t.auth?.signUp?.selectDomaine || '-- Choisir --'}</option>
+                                            <option value="DSI">DSI</option>
+                                            <option value="RSS">RSS</option>
+                                            <option value="DWM">DWM</option>
+                                        </select>
+                                        <div className="absolute right-4 top-3.5 pointer-events-none">
+                                            <ArrowRight className="h-4 w-4 text-slate-400 rotate-90" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            {formData.role === 'ALUMNI' && (
+                                <div className="p-3 text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+                                    ⚠️ {t.auth?.signUp?.alumniNotice || 'Les comptes Alumni nécessitent une validation par l\'administrateur avant de pouvoir se connecter.'}
+                                </div>
+                            )}
 
                             <div className="pt-4">
                                 <Button type="submit" className="w-full h-14 text-lg font-bold bg-blue-600 hover:bg-blue-700 text-white rounded-2xl shadow-xl shadow-blue-500/30 transition-all hover:scale-[1.02] flex items-center justify-center gap-2">

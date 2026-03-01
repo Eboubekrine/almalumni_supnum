@@ -75,6 +75,11 @@ export function AuthProvider({ children }) {
             const response = await api.post('/auth/register', userData);
 
             if (response.data.success) {
+                // Alumni accounts need admin validation - no token returned
+                if (response.data.pendingValidation) {
+                    return { success: true, pendingValidation: true, message: response.data.message };
+                }
+
                 const { token, user: rawUser } = response.data;
                 localStorage.setItem('token', token);
                 setUser(mapUserData(rawUser));
