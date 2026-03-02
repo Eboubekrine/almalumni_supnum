@@ -17,7 +17,7 @@ export function ManageInternships() {
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentInternship, setCurrentInternship] = useState(null);
-    const [formData, setFormData] = useState({ titre: '', entreprise: '', type_offre: 'STAGE', lieu: '', active: true });
+    const [formData, setFormData] = useState({ titre: '', entreprise: '', type_offre: 'STAGE', lieu: '', active: true, date_expiration: '' });
 
     const fetchInternships = async () => {
         try {
@@ -51,11 +51,12 @@ export function ManageInternships() {
                 entreprise: internship.entreprise,
                 type_offre: internship.type_offre,
                 lieu: internship.lieu || '',
-                active: true
+                active: true,
+                date_expiration: internship.date_expiration ? new Date(internship.date_expiration).toISOString().split('T')[0] : ''
             });
         } else {
             setCurrentInternship(null);
-            setFormData({ titre: '', entreprise: '', type_offre: 'STAGE', lieu: '', active: true });
+            setFormData({ titre: '', entreprise: '', type_offre: 'STAGE', lieu: '', active: true, date_expiration: '' });
         }
         setIsModalOpen(true);
     };
@@ -73,7 +74,8 @@ export function ManageInternships() {
                 entreprise: formData.entreprise,
                 description: "No description",
                 type_offre: formData.type_offre,
-                lieu: formData.lieu
+                lieu: formData.lieu,
+                date_expiration: formData.date_expiration || null
             };
 
             if (currentInternship) {
@@ -241,6 +243,15 @@ export function ManageInternships() {
                                         placeholder={t.internships.placeholder.location}
                                     />
                                 </div>
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Date d'expiration</label>
+                                <input
+                                    type="date"
+                                    value={formData.date_expiration}
+                                    onChange={(e) => setFormData({ ...formData, date_expiration: e.target.value })}
+                                    className="w-full h-10 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-500"
+                                />
                             </div>
                             <div className="flex items-center space-x-2 pt-2">
                                 <input

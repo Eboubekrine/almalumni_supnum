@@ -15,7 +15,7 @@ export const translations = {
             logout: 'Sign Out'
         },
         dashboard: {
-            nav: { dashboard: 'Dashboard', profile: 'Profile', users: 'Users', friends: 'Friends', messages: 'Messages', myOffers: 'My Offers' },
+            nav: { dashboard: 'Dashboard', profile: 'Profile', users: 'Alumni', friends: 'Friends', messages: 'Messages', myOffers: 'My Offers' },
             welcome: 'Welcome,',
             welcomeSubtitle: "Here's what's happening in your SupNum network.",
             stats: { totalUsers: 'Total Users', friends: 'Your Friends', pending: 'Pending Requests', growth: 'this month' },
@@ -290,7 +290,7 @@ export const translations = {
             failedAlert: 'Failed to process request'
         },
         search: {
-            title: 'Find People',
+            title: 'Alumni',
             placeholder: 'Search by name or email...',
             loading: 'Loading...',
             viewProfile: 'View Profile',
@@ -372,7 +372,7 @@ export const translations = {
             logout: 'Déconnexion'
         },
         dashboard: {
-            nav: { dashboard: 'Tableau de bord', profile: 'Profil', users: 'Utilisateurs', friends: 'Amis', messages: 'Messages', myOffers: 'Mes Offres' },
+            nav: { dashboard: 'Tableau de bord', profile: 'Profil', users: 'Alumni', friends: 'Amis', messages: 'Messages', myOffers: 'Mes Offres' },
             welcome: 'Bienvenue,',
             welcomeSubtitle: "Voici ce qui se passe dans votre réseau SupNum.",
             stats: { totalUsers: 'Total Utilisateurs', friends: 'Vos Amis', pending: 'Demandes en attente', growth: 'ce mois' },
@@ -647,7 +647,7 @@ export const translations = {
             failedAlert: 'Échec du traitement de la demande'
         },
         search: {
-            title: 'Trouver des gens',
+            title: 'Alumni',
             placeholder: 'Rechercher par nom ou e-mail...',
             loading: 'Chargement...',
             viewProfile: 'Voir le profil',
@@ -729,7 +729,7 @@ export const translations = {
             logout: 'تسجيل الخروج'
         },
         dashboard: {
-            nav: { dashboard: 'لوحة التحكم', profile: 'الملف الشخصي', users: 'المستخدمين', friends: 'الأصدقاء', messages: 'الرسائل', myOffers: 'عروضي' },
+            nav: { dashboard: 'لوحة التحكم', profile: 'الملف الشخصي', users: 'الخريجون', friends: 'الأصدقاء', messages: 'الرسائل', myOffers: 'عروضي' },
             welcome: 'مرحبًا،',
             welcomeSubtitle: 'إليك ما يحدث في شبكة SupNum الخاصة بك.',
             stats: { totalUsers: 'إجمالي المستخدمين', friends: 'أصدقاؤك', pending: 'طلبات معلقة', growth: 'هذا الشهر' },
@@ -1004,7 +1004,7 @@ export const translations = {
             failedAlert: 'فشل معالجة الطلب'
         },
         search: {
-            title: 'البحث عن مستخدمين',
+            title: 'الخريجون',
             placeholder: 'البحث بالاسم أو البريد الإلكتروني...',
             loading: 'جاري التحميل...',
             viewProfile: 'عرض الملف الشخصي',
