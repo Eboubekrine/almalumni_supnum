@@ -14,7 +14,8 @@ export function SignUp() {
         email: '',
         mot_de_passe: '',
         role: 'STUDENT',
-        domaine: ''
+        domaine: '',
+        annee_diplome: ''
     });
     const [pendingMessage, setPendingMessage] = useState('');
     const { signup } = useAuth();
@@ -205,8 +206,27 @@ export function SignUp() {
                             </div>
 
                             {formData.role === 'ALUMNI' && (
-                                <div className="p-3 text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
-                                    ⚠️ {t.auth?.signUp?.alumniNotice || 'Les comptes Alumni nécessitent une validation par l\'administrateur avant de pouvoir se connecter.'}
+                                <div className="space-y-4">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-bold text-slate-700 dark:text-slate-200">
+                                            {language === 'AR' ? 'سنة التخرج (Promotion)' : 'Année de graduation (Promotion)'}
+                                        </label>
+                                        <div className="relative group">
+                                            <Hash className="absolute left-4 top-3 h-5 w-5 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
+                                            <Input
+                                                name="annee_diplome"
+                                                type="number"
+                                                placeholder="Ex: 2023"
+                                                required
+                                                value={formData.annee_diplome}
+                                                onChange={handleChange}
+                                                className="pl-12 h-11 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-blue-500/20"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="p-3 text-xs text-amber-600 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+                                        ⚠️ {t.auth?.signUp?.alumniNotice || 'Les comptes Alumni nécessitent une validation par l\'administrateur avant de pouvoir se connecter.'}
+                                    </div>
                                 </div>
                             )}
 
