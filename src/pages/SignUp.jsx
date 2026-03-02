@@ -19,7 +19,7 @@ export function SignUp() {
     });
     const [pendingMessage, setPendingMessage] = useState('');
     const { signup } = useAuth();
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
