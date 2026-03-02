@@ -33,7 +33,7 @@ export function Search() {
     const filteredUsers = users.filter(user => {
         const fullName = `${user.prenom} ${user.nom}`.toLowerCase();
         const search = query.toLowerCase();
-        return user.role !== 'admin' && (
+        return user.role === 'ALUMNI' && (
             fullName.includes(search) ||
             user.email.toLowerCase().includes(search)
         );

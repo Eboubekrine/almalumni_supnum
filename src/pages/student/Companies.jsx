@@ -10,7 +10,8 @@ export function Companies() {
     const { t } = useLanguage();
     const [companies, setCompanies] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState('');
+    const [filterNom, setFilterNom] = useState('');
+    const [filterVille, setFilterVille] = useState('');
 
     useEffect(() => {
         const fetchCompanies = async () => {
@@ -29,9 +30,8 @@ export function Companies() {
     }, []);
 
     const filteredCompanies = companies.filter(c =>
-        c.nom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.secteur?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.ville?.toLowerCase().includes(searchTerm.toLowerCase())
+        (c.nom?.toLowerCase().includes(filterNom.toLowerCase())) &&
+        (c.ville?.toLowerCase().includes(filterVille.toLowerCase()))
     );
 
     return (
@@ -41,14 +41,25 @@ export function Companies() {
                 <p className="text-slate-500 dark:text-slate-400">{t.companies.subtitle}</p>
             </div>
 
-            <div className="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm relative">
-                <Search className="absolute left-7 top-7 h-5 w-5 text-slate-400" />
-                <Input
-                    placeholder={t.companies.searchPlaceholder}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-12 bg-slate-50 dark:bg-slate-900 border-none h-12"
-                />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm">
+                <div className="relative">
+                    <Search className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
+                    <Input
+                        placeholder={t.companies.name || "Nom Entreprise"}
+                        value={filterNom}
+                        onChange={(e) => setFilterNom(e.target.value)}
+                        className="pl-10 bg-slate-50 dark:bg-slate-900 border-none h-11"
+                    />
+                </div>
+                <div className="relative">
+                    <MapPin className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
+                    <Input
+                        placeholder={t.companies.location || "Ville"}
+                        value={filterVille}
+                        onChange={(e) => setFilterVille(e.target.value)}
+                        className="pl-10 bg-slate-50 dark:bg-slate-900 border-none h-11"
+                    />
+                </div>
             </div>
 
             {loading ? (

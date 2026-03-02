@@ -220,9 +220,11 @@ export function Messages() {
             <div className="w-80 border-r border-slate-200 dark:border-slate-800 flex flex-col bg-white dark:bg-slate-900">
                 <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
                     <h2 className="font-bold text-lg text-slate-900 dark:text-white">{t.messages.title}</h2>
-                    <Button size="icon" variant="ghost" onClick={() => setIsCreatingGroup(true)} title={t.messages.createGroup} className="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
-                        <Plus className="h-5 w-5" />
-                    </Button>
+                    {currentUser?.role === 'ALUMNI' && (
+                        <Button size="icon" variant="ghost" onClick={() => setIsCreatingGroup(true)} title={t.messages.createGroup} className="text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <Plus className="h-5 w-5" />
+                        </Button>
+                    )}
                 </div>
 
                 <AnimatePresence>

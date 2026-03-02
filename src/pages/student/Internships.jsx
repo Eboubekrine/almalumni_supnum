@@ -15,6 +15,8 @@ export function Internships() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState('All');
+    const [filterLieu, setFilterLieu] = useState('');
+    const [filterDateMax, setFilterDateMax] = useState('');
 
     // Application Modal state
     const [selectedOffre, setSelectedOffre] = useState(null);
@@ -75,7 +77,9 @@ export function Internships() {
         const matchesSearch = o.titre?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             o.entreprise?.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesType = filterType === 'All' || o.type_offre === filterType;
-        return matchesSearch && matchesType;
+        const matchesLieu = !filterLieu || o.lieu?.toLowerCase().includes(filterLieu.toLowerCase());
+        const matchesDate = !filterDateMax || new Date(o.date_publication) <= new Date(filterDateMax);
+        return matchesSearch && matchesType && matchesLieu && matchesDate;
     });
 
     return (
@@ -87,8 +91,8 @@ export function Internships() {
                 </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm">
-                <div className="relative flex-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm">
+                <div className="relative">
                     <Search className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
                     <Input
                         placeholder={t.internships.searchPlaceholder}
@@ -97,17 +101,36 @@ export function Internships() {
                         className="pl-10 bg-slate-50 dark:bg-slate-900 border-none"
                     />
                 </div>
+                <div className="relative">
+                    <MapPin className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
+                    <Input
+                        placeholder={t.profile.location || "Ville"}
+                        value={filterLieu}
+                        onChange={(e) => setFilterLieu(e.target.value)}
+                        className="pl-10 bg-slate-50 dark:bg-slate-900 border-none"
+                    />
+                </div>
                 <div className="flex items-center gap-2">
                     <Filter className="h-4 w-4 text-slate-400" />
                     <select
                         value={filterType}
                         onChange={(e) => setFilterType(e.target.value)}
-                        className="bg-slate-50 dark:bg-slate-900 border-none rounded-md text-sm p-2 focus:ring-2 focus:ring-blue-500"
+                        className="flex-1 bg-slate-50 dark:bg-slate-900 border-none rounded-md text-sm p-2 focus:ring-2 focus:ring-blue-500"
                     >
                         <option value="All">{t.internships.allTypes}</option>
                         <option value="STAGE">{t.internships.internship}</option>
                         <option value="EMPLOI">{t.internships.job}</option>
                     </select>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-slate-400" />
+                    <input
+                        type="date"
+                        value={filterDateMax}
+                        onChange={(e) => setFilterDateMax(e.target.value)}
+                        className="flex-1 bg-slate-50 dark:bg-slate-900 border-none rounded-md text-sm p-2 focus:ring-2 focus:ring-blue-500 text-slate-500"
+                        title="Date Max"
+                    />
                 </div>
             </div>
 
