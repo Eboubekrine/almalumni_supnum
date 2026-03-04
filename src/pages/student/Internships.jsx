@@ -79,7 +79,8 @@ export function Internships() {
         const matchesType = filterType === 'All' || o.type_offre === filterType;
         const matchesLieu = !filterLieu || o.lieu?.toLowerCase().includes(filterLieu.toLowerCase());
         const matchesDate = !filterDateMax || new Date(o.date_publication) <= new Date(filterDateMax);
-        return matchesSearch && matchesType && matchesLieu && matchesDate;
+        const isActive = o.est_active !== false;
+        return matchesSearch && matchesType && matchesLieu && matchesDate && isActive;
     });
 
     return (

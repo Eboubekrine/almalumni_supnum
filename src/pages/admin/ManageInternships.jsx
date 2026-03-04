@@ -123,8 +123,16 @@ export function ManageInternships() {
         }
     };
 
-    const toggleActive = (id) => {
-        // Not implemented in backend yet, just UI toggle for now or ignore
+    const toggleActive = async (id, currentStatus) => {
+        try {
+            await api.put(`/offres/${id}`, { est_active: !currentStatus });
+            setInternships(internships.map(i =>
+                i.id_offre === id ? { ...i, est_active: !currentStatus } : i
+            ));
+        } catch (error) {
+            console.error(error);
+            alert('Failed to toggle status');
+        }
     };
 
     return (
@@ -191,15 +199,15 @@ export function ManageInternships() {
                                 )}
                                 <div className="flex items-center space-x-3 bg-slate-50/50 dark:bg-slate-900/50 p-2 rounded-xl border border-slate-100/50 dark:border-slate-700/50">
                                     <button
-                                        onClick={() => toggleActive(internship.id_offre)}
+                                        onClick={() => toggleActive(internship.id_offre, internship.est_active)}
                                         className={cn(
                                             "px-4 py-1.5 rounded-lg text-[11px] font-bold uppercase transition-all shadow-sm",
-                                            internship.active !== false
+                                            internship.est_active !== false
                                                 ? "bg-white dark:bg-slate-800 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 shadow-green-200/50"
                                                 : "bg-white dark:bg-slate-800 text-slate-400 hover:bg-slate-50 shadow-slate-200/50"
                                         )}
                                     >
-                                        {internship.active !== false ? '● Active' : '○ Closed'}
+                                        {internship.est_active !== false ? '● Active' : '○ Closed'}
                                     </button>
                                     <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1" />
                                     <Button onClick={() => handleOpenModal(internship)} variant="ghost" size="sm" className="h-9 w-9 p-0 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600">

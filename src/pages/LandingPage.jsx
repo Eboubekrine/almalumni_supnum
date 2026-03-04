@@ -54,17 +54,16 @@ export function LandingPage() {
                     setUpcomingEvents(eventsRes.data.data.slice(0, 3));
                 }
 
-                // Fetch users for stats
-                const usersRes = await api.get('/users');
-                if (usersRes.data.success) {
-                    const users = usersRes.data.users;
-                    const students = users.filter(u => u.role === 'STUDENT').length;
-                    const graduates = users.filter(u => u.role === 'ALUMNI').length;
+                // Fetch stats
+                const statsRes = await api.get('/dashboard/stats');
+                if (statsRes.data.success) {
                     setStats({
-                        totalUsers: users.length,
-                        students,
-                        graduates,
-                        events: eventsRes.data?.data?.length || 0
+                        totalUsers: statsRes.data.data.totalUsers,
+                        students: statsRes.data.data.students,
+                        graduates: statsRes.data.data.alumni,
+                        events: statsRes.data.data.events,
+                        offers: statsRes.data.data.offers,
+                        partners: statsRes.data.data.partners
                     });
                 }
             } catch (error) {
@@ -222,7 +221,7 @@ export function LandingPage() {
                                 <Building className="h-8 w-8" />
                             </div>
                             <div>
-                                <p className="text-2xl font-bold text-slate-900 dark:text-white">15+</p>
+                                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.partners}+</p>
                                 <p className="text-sm text-slate-500 dark:text-slate-400">{t.opportunities.partners}</p>
                             </div>
                         </Card>
@@ -231,7 +230,7 @@ export function LandingPage() {
                                 <Briefcase className="h-8 w-8" />
                             </div>
                             <div>
-                                <p className="text-2xl font-bold text-slate-900 dark:text-white">32+</p>
+                                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.offers}+</p>
                                 <p className="text-sm text-slate-500 dark:text-slate-400">{t.opportunities.active}</p>
                             </div>
                         </Card>
