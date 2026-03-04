@@ -9,41 +9,31 @@ import { useAuth } from '../context/AuthContext';
 import { useState, useEffect } from 'react';
 import api from '../lib/axios';
 
-// Data for "Students by Entry Year" (Bar Chart)
-const entryYearData = [
-    { name: '2021', students: 1 },
-    { name: '2022', students: 2 },
-    { name: '2023', students: 2 },
-    { name: '2024', students: 1 },
-];
-
-// Data for "Graduates by Promotion" (Donut Chart)
-const promotionData = [
-    { name: 'Promo 2020', value: 17, color: '#0d9488' }, // Teal
-    { name: 'Promo 2019', value: 17, color: '#1e3a8a' }, // Dark Blue
-    { name: 'Promo 2023', value: 17, color: '#1e40af' }, // Blue
-    { name: 'Promo 2022', value: 33, color: '#facc15' }, // Yellow
-    { name: 'Promo 2021', value: 17, color: '#2dd4bf' }, // Light Teal
-];
-
-// Data for "Community Growth" (Line/Area Chart)
-const growthData = [
-    { name: '2016', students: 0, graduates: 0 },
-    { name: '2017', students: 0, graduates: 0 },
-    { name: '2018', students: 0, graduates: 0 },
-    { name: '2019', students: 0, graduates: 1 },
-    { name: '2020', students: 0, graduates: 2 },
-    { name: '2021', students: 1, graduates: 3 },
-    { name: '2022', students: 3, graduates: 5 },
-    { name: '2023', students: 5, graduates: 6 },
-    { name: '2024', students: 6, graduates: 6 },
-];
-
 export function LandingPage() {
     const { t } = useLanguage();
     const { user } = useAuth();
     const [upcomingEvents, setUpcomingEvents] = useState([]);
-    const [stats, setStats] = useState({ totalUsers: 0, students: 0, graduates: 0, events: 0 });
+    const [stats, setStats] = useState({ totalUsers: 0, students: 0, graduates: 0, events: 0, charts: {} });
+
+    // Chart Data Transformation
+    const entryYearData = stats.charts.entryYear?.map(d => ({ name: d.year.toString(), students: d.count })) || [];
+
+    const promotionData = stats.charts.promotion?.map((d, i) => ({
+        name: d.promotion,
+        value: d.count,
+        color: ['#0d9488', '#1e3a8a', '#1e40af', '#facc15', '#2dd4bf'][i % 5]
+    })) || [];
+
+    const specializationData = stats.charts.specialization?.map((d, i) => ({
+        name: d.domaine,
+        value: d.count,
+        color: ['#3b82f6', '#06b6d4', '#4f46e5', '#8b5cf6'][i % 4]
+    })) || [];
+
+    const offerTypeData = stats.charts.offerTypes?.map(d => ({
+        name: d.type_offre,
+        count: d.count
+    })) || [];
 
     useEffect(() => {
         const fetchData = async () => {
@@ -63,7 +53,8 @@ export function LandingPage() {
                         graduates: statsRes.data.data.alumni,
                         events: statsRes.data.data.events,
                         offers: statsRes.data.data.offers,
-                        partners: statsRes.data.data.partners
+                        partners: statsRes.data.data.partners,
+                        charts: statsRes.data.data.charts
                     });
                 }
             } catch (error) {
@@ -328,37 +319,60 @@ export function LandingPage() {
                             </CardContent>
                         </Card>
 
-                        {/* Community Growth Over Years */}
+                        {/* Offers by Type */}
                         <Card className="shadow-sm border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 lg:col-span-2">
                             <CardContent className="p-6">
                                 <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white flex items-center gap-2">
-                                    <BarChart3 className="h-5 w-5 text-teal-500" />
-                                    {t.charts.growth}
+                                    <Briefcase className="h-5 w-5 text-teal-500" />
+                                    {t.opportunities.title}
                                 </h3>
                                 <div className="h-[300px] w-full">
                                     <ResponsiveContainer width="100%" height="100%">
-                                        <AreaChart data={growthData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                                            <defs>
-                                                <linearGradient id="colorStudents" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#2dd4bf" stopOpacity={0.3} />
-                                                    <stop offset="95%" stopColor="#2dd4bf" stopOpacity={0} />
-                                                </linearGradient>
-                                                <linearGradient id="colorGraduates" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#1e3a8a" stopOpacity={0.3} />
-                                                    <stop offset="95%" stopColor="#1e3a8a" stopOpacity={0} />
-                                                </linearGradient>
-                                            </defs>
+                                        <BarChart data={offerTypeData}>
                                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.3} />
                                             <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8' }} />
                                             <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8' }} />
                                             <Tooltip
+                                                cursor={{ fill: 'transparent' }}
                                                 contentStyle={{ backgroundColor: '#fff', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
                                                 itemStyle={{ color: '#1e293b' }}
                                             />
-                                            <Area type="monotone" dataKey="students" stroke="#2dd4bf" strokeWidth={3} fillOpacity={1} fill="url(#colorStudents)" name={t.charts.students} />
-                                            <Area type="monotone" dataKey="graduates" stroke="#1e3a8a" strokeWidth={3} fillOpacity={1} fill="url(#colorGraduates)" name={t.charts.graduates} />
-                                            <Legend iconType="circle" />
-                                        </AreaChart>
+                                            <Bar dataKey="count" fill="#3b82f6" radius={[4, 4, 0, 0]} barSize={50} />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Specialization Distribution */}
+                        <Card className="shadow-sm border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 lg:col-span-2">
+                            <CardContent className="p-6">
+                                <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white flex items-center gap-2">
+                                    <Zap className="h-5 w-5 text-teal-500" />
+                                    {t.profile.details || 'Specializations'}
+                                </h3>
+                                <div className="h-[300px] w-full flex items-center justify-center">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <PieChart>
+                                            <Pie
+                                                data={specializationData}
+                                                cx="50%"
+                                                cy="50%"
+                                                innerRadius={60}
+                                                outerRadius={100}
+                                                paddingAngle={2}
+                                                dataKey="value"
+                                            >
+                                                {specializationData.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={entry.color} strokeWidth={0} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip
+                                                contentStyle={{ backgroundColor: '#fff', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                                itemStyle={{ color: '#1e293b' }}
+                                            />
+                                            <Legend verticalAlign="bottom" align="center" layout="horizontal" iconType="circle" />
+                                        </PieChart>
                                     </ResponsiveContainer>
                                 </div>
                             </CardContent>
