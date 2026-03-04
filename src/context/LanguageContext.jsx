@@ -15,7 +15,7 @@ export const translations = {
             logout: 'Sign Out'
         },
         dashboard: {
-            nav: { dashboard: 'Dashboard', profile: 'Profile', users: 'Alumnis', friends: 'Friends', messages: 'Messages', myOffers: 'My Offers' },
+            nav: { dashboard: 'Dashboard', profile: 'Profile', users: 'My Network', friends: 'Friends', messages: 'Messages', myOffers: 'My Offers' },
             welcome: 'Welcome,',
             welcomeSubtitle: "Here's what's happening in your SupNum network.",
             stats: { totalUsers: 'Total Users', friends: 'Your Friends', pending: 'Pending Requests', growth: 'this month' },
@@ -27,15 +27,15 @@ export const translations = {
             connectedSuccess: 'You have successfully logged in.'
         },
         admin: {
-            nav: { dashboard: 'Dashboard', events: 'Manage Events', users: 'Manage Alumnis' },
+            nav: { dashboard: 'Dashboard', events: 'Manage Events', users: 'Manage Network', applications: 'Applications' },
             welcome: 'Admin Dashboard',
             subtitle: 'Manage your SupNum Connect platform.',
             stats: { totalUsers: 'Total Users', students: 'Old Graduates', graduates: 'New Graduates' },
             charts: { userGrowth: 'User Growth', students: 'Old Graduates', graduates: 'New Graduates', opportunitiesPosted: 'Create Offer' },
             events: { title: 'Recent Events', create: 'Create Event', edit: 'Edit', delete: 'Delete', learnMore: 'More' },
             users: {
-                title: 'Manage Alumnis',
-                search: 'Search Alumnis..., ID or email...',
+                title: 'Manage Network',
+                search: 'Search Network..., ID or email...',
                 role: 'Role',
                 actions: 'Actions',
                 remove: 'Remove',
@@ -372,7 +372,7 @@ export const translations = {
             logout: 'Déconnexion'
         },
         dashboard: {
-            nav: { dashboard: 'Tableau de bord', profile: 'Profil', users: 'Alumnis', friends: 'Amis', messages: 'Messages', myOffers: 'Mes Offres' },
+            nav: { dashboard: 'Tableau de bord', profile: 'Profil', users: 'Mon Réseau', friends: 'Amis', messages: 'Messages', myOffers: 'Mes Offres' },
             welcome: 'Bienvenue,',
             welcomeSubtitle: "Voici ce qui se passe dans votre réseau SupNum.",
             stats: { totalUsers: 'Total Utilisateurs', friends: 'Vos Amis', pending: 'Demandes en attente', growth: 'ce mois' },
@@ -384,15 +384,15 @@ export const translations = {
             connectedSuccess: 'Vous êtes connecté avec succès.'
         },
         admin: {
-            nav: { dashboard: 'Tableau de bord', events: 'Gestion des événements', users: 'Gérer les Alumnis' },
+            nav: { dashboard: 'Tableau de bord', events: 'Gestion des événements', users: 'Gérer le Réseau', applications: 'Candidatures' },
             welcome: 'Tableau de bord administrateur',
             subtitle: 'Gérez votre plateforme SupNum Connect.',
             stats: { totalUsers: 'Total Utilisateurs', students: 'Anciens diplômés', graduates: 'Nouveaux diplômés' },
             charts: { userGrowth: 'Croissance des utilisateurs', students: 'Anciens diplômés', graduates: 'Nouveaux diplômés', opportunitiesPosted: 'Création d\'œuvre' },
             events: { title: 'Événements récents', create: 'Créer un événement', edit: 'Modifier', delete: 'Supprimer', learnMore: 'Plus' },
             users: {
-                title: 'Gestion des Alumnis',
-                search: 'Rechercher des Alumnis..., ID ou e-mail...',
+                title: 'Gestion du Réseau',
+                search: 'Rechercher dans le Réseau..., ID ou e-mail...',
                 role: 'Rôle',
                 actions: 'Actions',
                 remove: 'Supprimer',
@@ -729,7 +729,7 @@ export const translations = {
             logout: 'تسجيل الخروج'
         },
         dashboard: {
-            nav: { dashboard: 'لوحة التحكم', profile: 'الملف الشخصي', users: 'الخريجون (Alumnis)', friends: 'الأصدقاء', messages: 'الرسائل', myOffers: 'عروضي' },
+            nav: { dashboard: 'لوحة التحكم', profile: 'الملف الشخصي', users: 'شبكتي', friends: 'الأصدقاء', messages: 'الرسائل', myOffers: 'عروضي' },
             welcome: 'مرحبًا،',
             welcomeSubtitle: 'إليك ما يحدث في شبكة SupNum الخاصة بك.',
             stats: { totalUsers: 'إجمالي المستخدمين', friends: 'أصدقاؤك', pending: 'طلبات معلقة', growth: 'هذا الشهر' },
@@ -741,15 +741,15 @@ export const translations = {
             connectedSuccess: 'تم تسجيل الدخول بنجاح.'
         },
         admin: {
-            nav: { dashboard: 'لوحة التحكم', events: 'إدارة الأحداث', users: 'إدارة Alumnis' },
+            nav: { dashboard: 'لوحة التحكم', events: 'إدارة الأحداث', users: 'إدارة الشبكة', applications: 'الترشيحات' },
             welcome: 'لوحة تحكم المسؤول',
             subtitle: 'إدارة منصة SupNum Connect الخاصة بك.',
             stats: { totalUsers: 'إجمالي المستخدمين', students: 'الخريجين القدامى', graduates: 'الخريجين الجدد' },
             charts: { userGrowth: 'نمو المستخدمين', students: 'الخريجين القدامى', graduates: 'الخريجين الجدد', opportunitiesPosted: 'إنشاء عرض' },
             events: { title: 'الأحداث الأخيرة', create: 'إنشاء حدث', edit: 'تعديل', delete: 'حذف', learnMore: 'المزيد' },
             users: {
-                title: 'إدارة Alumnis',
-                search: 'البحث عن Alumnis...',
+                title: 'إدارة الشبكة',
+                search: 'البحث في الشبكة...',
                 role: 'الدور',
                 actions: 'إجراءات',
                 remove: 'إزالة',

@@ -65,6 +65,7 @@ export function DashboardLayout() {
         { name: t.admin.nav.dashboard, path: '/admin', icon: LayoutDashboard },
         { name: t.admin.nav.events, path: '/admin/events', icon: Calendar },
         { name: t.admin.nav.users, path: '/admin/users', icon: Users },
+        { name: t.admin.nav.applications, path: '/admin/applications', icon: Briefcase },
         { name: t.nav.internships, path: '/admin/internships', icon: Briefcase },
         { name: t.nav.companies, path: '/admin/companies', icon: Building },
     ];
