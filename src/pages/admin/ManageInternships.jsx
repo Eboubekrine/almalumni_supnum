@@ -17,6 +17,9 @@ export function ManageInternships() {
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentInternship, setCurrentInternship] = useState(null);
+    const [candidates, setCandidates] = useState([]);
+    const [loadingCandidates, setLoadingCandidates] = useState(false);
+    const [isCandidatesModalOpen, setIsCandidatesModalOpen] = useState(false);
     const [formData, setFormData] = useState({ titre: '', entreprise: '', type_offre: 'STAGE', lieu: '', active: true, date_expiration: '' });
 
     const fetchInternships = async () => {
@@ -64,6 +67,24 @@ export function ManageInternships() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setCurrentInternship(null);
+    };
+
+    const handleViewCandidates = async (internship) => {
+        setCurrentInternship(internship);
+        setCandidates([]);
+        setLoadingCandidates(true);
+        setIsCandidatesModalOpen(true);
+        try {
+            const res = await api.get(`/candidatures/offre/${internship.id_offre}`);
+            if (res.data.success) {
+                setCandidates(res.data.data);
+            }
+        } catch (error) {
+            console.error(error);
+            alert('Failed to load candidates');
+        } finally {
+            setLoadingCandidates(false);
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -158,25 +179,36 @@ export function ManageInternships() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex items-center space-x-3 self-end md:self-center bg-slate-50/50 dark:bg-slate-900/50 p-2 rounded-xl border border-slate-100/50 dark:border-slate-700/50">
-                                <button
-                                    onClick={() => toggleActive(internship.id_offre)}
-                                    className={cn(
-                                        "px-4 py-1.5 rounded-lg text-[11px] font-bold uppercase transition-all shadow-sm",
-                                        internship.active !== false
-                                            ? "bg-white dark:bg-slate-800 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 shadow-green-200/50"
-                                            : "bg-white dark:bg-slate-800 text-slate-400 hover:bg-slate-50 shadow-slate-200/50"
-                                    )}
-                                >
-                                    {internship.active !== false ? '● Active' : '○ Closed'}
-                                </button>
-                                <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1" />
-                                <Button onClick={() => handleOpenModal(internship)} variant="ghost" size="sm" className="h-9 w-9 p-0 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600">
-                                    <Edit className="h-4 w-4" />
-                                </Button>
-                                <Button onClick={() => handleDelete(internship.id_offre)} variant="ghost" size="sm" className="h-9 w-9 p-0 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500">
-                                    <Trash2 className="h-4 w-4" />
-                                </Button>
+                            <div className="flex flex-col md:flex-row items-center gap-4">
+                                {internship.candidate_count > 0 && (
+                                    <button
+                                        onClick={() => handleViewCandidates(internship)}
+                                        className="flex items-center gap-2 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg text-sm font-semibold hover:bg-blue-100 transition-colors"
+                                    >
+                                        <Search className="h-4 w-4" />
+                                        {internship.candidate_count} Candidates
+                                    </button>
+                                )}
+                                <div className="flex items-center space-x-3 bg-slate-50/50 dark:bg-slate-900/50 p-2 rounded-xl border border-slate-100/50 dark:border-slate-700/50">
+                                    <button
+                                        onClick={() => toggleActive(internship.id_offre)}
+                                        className={cn(
+                                            "px-4 py-1.5 rounded-lg text-[11px] font-bold uppercase transition-all shadow-sm",
+                                            internship.active !== false
+                                                ? "bg-white dark:bg-slate-800 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 shadow-green-200/50"
+                                                : "bg-white dark:bg-slate-800 text-slate-400 hover:bg-slate-50 shadow-slate-200/50"
+                                        )}
+                                    >
+                                        {internship.active !== false ? '● Active' : '○ Closed'}
+                                    </button>
+                                    <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1" />
+                                    <Button onClick={() => handleOpenModal(internship)} variant="ghost" size="sm" className="h-9 w-9 p-0 hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600">
+                                        <Edit className="h-4 w-4" />
+                                    </Button>
+                                    <Button onClick={() => handleDelete(internship.id_offre)} variant="ghost" size="sm" className="h-9 w-9 p-0 hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500">
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                </div>
                             </div>
                         </CardContent>
                     </Card>
@@ -270,6 +302,59 @@ export function ManageInternships() {
                                 </Button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+            {/* Candidates Modal */}
+            {isCandidatesModalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+                    <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                        <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                            <div>
+                                <h2 className="text-xl font-bold text-slate-900 dark:text-white">Candidates for {currentInternship?.titre}</h2>
+                                <p className="text-sm text-slate-500">{currentInternship?.entreprise}</p>
+                            </div>
+                            <button onClick={() => setIsCandidatesModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+                                <X className="h-5 w-5" />
+                            </button>
+                        </div>
+                        <div className="p-6 max-h-[60vh] overflow-y-auto">
+                            {loadingCandidates ? (
+                                <div className="text-center py-10 text-slate-500">Loading candidates...</div>
+                            ) : candidates.length > 0 ? (
+                                <div className="space-y-4">
+                                    {candidates.map(cand => (
+                                        <div key={cand.id_candidature} className="flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-blue-200 transition-colors bg-slate-50/50 dark:bg-slate-900/50">
+                                            <div className="flex items-center gap-4">
+                                                <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold overflow-hidden">
+                                                    {cand.avatar ? <img src={cand.avatar} alt="" className="h-full w-full object-cover" /> : (cand.prenom?.[0] || cand.nom?.[0])}
+                                                </div>
+                                                <div>
+                                                    <h4 className="font-bold text-slate-900 dark:text-white">{cand.prenom} {cand.nom}</h4>
+                                                    <p className="text-xs text-slate-500">{cand.email}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className={cn(
+                                                    "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase",
+                                                    cand.statut === 'ACCEPTE' ? "bg-green-100 text-green-700" :
+                                                        cand.statut === 'REFUSE' ? "bg-red-100 text-red-700" :
+                                                            "bg-amber-100 text-amber-700"
+                                                )}>
+                                                    {cand.statut}
+                                                </div>
+                                                <p className="text-[10px] text-slate-400 mt-1">{new Date(cand.date_postulation).toLocaleDateString()}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="text-center py-10 text-slate-500">No candidates yet for this offer.</div>
+                            )}
+                        </div>
+                        <div className="p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex justify-end">
+                            <Button onClick={() => setIsCandidatesModalOpen(false)}>Close</Button>
+                        </div>
                     </div>
                 </div>
             )}
