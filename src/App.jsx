@@ -29,7 +29,6 @@ import { ManageEvents } from './pages/admin/ManageEvents';
 import { ManageUsers } from './pages/admin/ManageUsers';
 import { ManageInternships } from './pages/admin/ManageInternships';
 import { ManageCompanies } from './pages/admin/ManageCompanies';
-import { ManageApplications } from './pages/admin/ManageApplications';
 
 function App() {
   return (
@@ -78,7 +77,6 @@ function App() {
               <Route path="users" element={<ManageUsers />} />
               <Route path="internships" element={<ManageInternships />} />
               <Route path="companies" element={<ManageCompanies />} />
-              <Route path="applications" element={<ManageApplications />} />
               <Route path="profile/:id" element={<UserProfile />} />
             </Route>
 
