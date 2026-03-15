@@ -45,7 +45,7 @@ export function LandingPage() {
                 }
 
                 // Fetch stats
-                const statsRes = await api.get('/dashboard/stats');
+                const statsRes = await api.get('/admin/stats');
                 if (statsRes.data.success) {
                     setStats({
                         totalUsers: statsRes.data.data.totalUsers,
