@@ -35,6 +35,44 @@ export function LandingPage() {
         count: d.count
     })) || [];
 
+    const mockGrowthData = [
+        { year: '2021', students: 200, graduates: 0 },
+        { year: '2022', students: 240, graduates: 0 },
+        { year: '2023', students: 240, graduates: 150 },
+        { year: '2024', students: 400, graduates: 230 },
+        { year: '2025', students: 230, graduates: 310 },
+    ];
+
+    const growthDataMap = {};
+    if (stats.charts.entryYear) {
+        let cumulativeStudents = 0;
+        [...stats.charts.entryYear].sort((a, b) => a.year - b.year).forEach(d => {
+            cumulativeStudents += d.count;
+            if (!growthDataMap[d.year]) growthDataMap[d.year] = { year: d.year.toString(), students: 0, graduates: 0 };
+            growthDataMap[d.year].students = cumulativeStudents;
+        });
+    }
+    if (stats.charts.promotion) {
+        let cumulativeGraduates = 0;
+        [...stats.charts.promotion].sort((a, b) => a.promotion - b.promotion).forEach(d => {
+            cumulativeGraduates += d.count;
+            if (!growthDataMap[d.promotion]) growthDataMap[d.promotion] = { year: d.promotion.toString(), students: 0, graduates: 0 };
+            growthDataMap[d.promotion].graduates = cumulativeGraduates;
+        });
+    }
+
+    const realGrowthData = Object.values(growthDataMap).sort((a, b) => a.year.localeCompare(b.year));
+    // Carry over values to fill gaps
+    let prevStudents = 0, prevGrads = 0;
+    realGrowthData.forEach(d => {
+        if (d.students === 0) d.students = prevStudents;
+        if (d.graduates === 0) d.graduates = prevGrads;
+        prevStudents = d.students;
+        prevGrads = d.graduates;
+    });
+
+    const finalGrowthData = realGrowthData.length > 1 ? realGrowthData : mockGrowthData;
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -260,6 +298,42 @@ export function LandingPage() {
             <section className="py-20 bg-white dark:bg-slate-950 transition-colors duration-300">
                 <div className="container mx-auto px-4 md:px-6">
                     <div className="grid gap-8 lg:grid-cols-2">
+                        {/* Community Growth Over Years Area Chart (New) */}
+                        <Card className="shadow-sm border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 lg:col-span-2">
+                            <CardContent className="p-6">
+                                <h3 className="text-xl font-bold mb-6 text-slate-800 dark:text-white flex items-center gap-2">
+                                    <BarChart3 className="h-5 w-5 text-teal-500" />
+                                    {t.charts.growth}
+                                </h3>
+                                <div className="h-[300px] w-full">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <AreaChart data={finalGrowthData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                                            <defs>
+                                                <linearGradient id="colorStudents" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="5%" stopColor="#2dd4bf" stopOpacity={0.3} />
+                                                    <stop offset="95%" stopColor="#2dd4bf" stopOpacity={0} />
+                                                </linearGradient>
+                                                <linearGradient id="colorGraduates" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="5%" stopColor="#1e3a8a" stopOpacity={0.3} />
+                                                    <stop offset="95%" stopColor="#1e3a8a" stopOpacity={0} />
+                                                </linearGradient>
+                                            </defs>
+                                            <XAxis dataKey="year" axisLine={false} tickLine={false} tick={{ fill: '#94a3b8' }} />
+                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8' }} />
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.3} />
+                                            <Tooltip
+                                                contentStyle={{ backgroundColor: '#fff', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                                                itemStyle={{ color: '#1e293b' }}
+                                            />
+                                            <Legend verticalAlign="bottom" align="center" iconType="circle" />
+                                            <Area type="monotone" dataKey="students" name={t.charts.students} stroke="#2dd4bf" strokeWidth={3} fillOpacity={1} fill="url(#colorStudents)" />
+                                            <Area type="monotone" dataKey="graduates" name={t.charts.graduates} stroke="#1e3a8a" strokeWidth={3} fillOpacity={1} fill="url(#colorGraduates)" />
+                                        </AreaChart>
+                                    </ResponsiveContainer>
+                                </div>
+                            </CardContent>
+                        </Card>
+
                         {/* Students by Entry Year */}
                         <Card className="shadow-sm border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900">
                             <CardContent className="p-6">
